@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
-using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace ContosoUniversity.Shared.Features.Courses
 {
@@ -14,6 +14,7 @@ namespace ContosoUniversity.Shared.Features.Courses
             public int? Number { get; set; }
             public string Title { get; set; }
             public int? Credits { get; set; }
+            [DisplayName("Department")]
             public int? DepartmentId { get; set; }
 
             public IEnumerable<Department> Departments { get; set; }
