@@ -1,0 +1,57 @@
+﻿@using _ = ContosoUniversity.Shared.Features.Students.Create
+
+@page "/Students/Create"
+@inject HttpClient _httpClient
+@inject NavigationManager  _navigationManager
+
+<h2>Create</h2>
+
+<h4>Student</h4>
+<hr />
+
+<Loading When="Data == null">
+
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm Model="@Data" OnValidSubmit="OnPostAsync">
+                <FluentValidationValidator />
+                <FormBlock>
+                    <Label @bind-Value="Data.LastName" />
+                    <InputText @bind-Value="Data.LastName" />
+                    <ValidationMessage For="() => Data.LastName" />
+                </FormBlock>
+                <FormBlock>
+                    <Label @bind-Value="Data.FirstMidName" />
+                    <InputText @bind-Value="Data.FirstMidName" />
+                    <ValidationMessage For="() => Data.FirstMidName" />
+                </FormBlock>
+                <FormBlock>
+                    <Label @bind-Value="Data.EnrollmentDate" />
+                    <InputDate @bind-Value="Data.EnrollmentDate" />
+                    <ValidationMessage For="() => Data.EnrollmentDate" />
+                </FormBlock>
+                <FormBlock>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </FormBlock>
+            </EditForm>
+        </div>
+    </div>
+
+    <div>
+        <a href="/Students">Back to List</a>
+    </div>
+
+</Loading>
+
+@code {
+    public _.Command Data { get; set; }
+
+    protected override async Task OnInitializedAsync() => Data = await _httpClient.GetJsonAsync<_.Command>("/api/Students/Create");
+
+    private async Task OnPostAsync()
+    {
+        await _httpClient.PostJsonAsync("/api/Students/Create", Data);
+
+        _navigationManager.NavigateTo("/Students");
+    }
+}
