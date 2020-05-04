@@ -52,7 +52,7 @@ namespace ContosoUniversity.Server.Features.Students
             {
                 _mapper.Map(message, await _db.Students.FindAsync(message.Id));
 
-                return default;
+                return Unit.Value;
             }
         }
     }

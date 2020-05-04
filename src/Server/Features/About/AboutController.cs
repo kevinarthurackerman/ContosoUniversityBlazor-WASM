@@ -15,6 +15,6 @@ namespace ContosoUniversity.Server.Features.Courses
 
         public AboutController(IMediator mediator) => _mediator = mediator;
 
-        [HttpGet] public async Task<_.Index.Result> Index([FromQuery] _.Index.Query query) => await _mediator.Send(query);
+        [HttpGet] public Task<_.Index.Result> Index([FromQuery] _.Index.Query query) => _mediator.Send(query);
     }
 }

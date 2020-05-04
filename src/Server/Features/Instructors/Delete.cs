@@ -50,7 +50,7 @@ namespace ContosoUniversity.Server.Features.Instructors
 
                 _db.Instructors.Remove(instructor);
 
-                return default;
+                return Unit.Value;
             }
         }
     }

@@ -16,7 +16,7 @@ namespace ContosoUniversity.Server.Features.Courses
         public CoursesController(IMediator mediator) => _mediator = mediator;
 
         [HttpGet("Create")] public Task<_.Create.Command> Create([FromRoute] _.Create.Query query) => _mediator.Send(query);
-        [HttpPost("Create")] public Task<int> Create(_.Create.Command query) => _mediator.Send(query);
+        [HttpPost("Create")] public Task Create(_.Create.Command query) => _mediator.Send(query);
 
         [HttpGet("Delete/{id:int}")] public Task<_.Delete.Command> Delete([FromRoute] _.Delete.Query query) => _mediator.Send(query);
         [HttpPost("Delete/{id:int}")] public Task Delete(_.Delete.Command query) => _mediator.Send(query);

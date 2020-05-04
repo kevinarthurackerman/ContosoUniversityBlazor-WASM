@@ -67,7 +67,7 @@ namespace ContosoUniversity.Server.Features.Courses
 
                 _mapper.Map(request, course);
 
-                return default;
+                return Unit.Value;
             }
         }
     }

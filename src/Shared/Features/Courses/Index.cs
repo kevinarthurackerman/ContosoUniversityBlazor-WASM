@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace ContosoUniversity.Shared.Features.Courses
@@ -12,7 +11,7 @@ namespace ContosoUniversity.Shared.Features.Courses
 
         public class Result
         {
-            public List<Course> Courses { get; set; }
+            public Course[] Courses { get; set; }
 
             public class Course
             {

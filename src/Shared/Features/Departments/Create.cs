@@ -2,7 +2,6 @@
 using FluentValidation;
 using MediatR;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace ContosoUniversity.Shared.Features.Departments
@@ -25,14 +24,14 @@ namespace ContosoUniversity.Shared.Features.Departments
             }
         }
 
-        public class Command : IRequest<int>
+        public class Command : IRequest
         {
             public string Name { get; set; }
             public decimal? Budget { get; set; }
             public DateTime? StartDate { get; set; }
             [DisplayName("Instructor")]
             public int? InstructorId { get; set; }
-            public IEnumerable<Instructor> Administrators { get; set; }
+            public Instructor[] Administrators { get; set; }
 
             public class Instructor : IPerson
             {

@@ -68,7 +68,7 @@ namespace ContosoUniversity.Server.Features.Departments
 
                     _mapper.Map(message, dept);
 
-                    return default;
+                    return Unit.Value;
                 }
             }
         }

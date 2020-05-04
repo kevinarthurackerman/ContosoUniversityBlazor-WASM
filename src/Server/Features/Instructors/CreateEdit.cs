@@ -7,7 +7,6 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,9 +40,10 @@ namespace ContosoUniversity.Server.Features.Instructors
             public async Task<Command> Handle(Query message, CancellationToken token)
             {
                 Command model;
+
                 if (message.Id == null)
                 {
-                    model = new Command { Courses = new List<Command.CourseData>() };
+                    model = new Command { Courses = new Command.CourseData[0] };
                 }
                 else
                 {
@@ -57,26 +57,26 @@ namespace ContosoUniversity.Server.Features.Instructors
                         .Select(x => x.CourseId)
                         .ToArrayAsync(token);
 
-                    model.Courses = (await _db.Courses.ProjectTo<Command.CourseData>(_configuration).ToListAsync(token))
+                    model.Courses = (await _db.Courses.ProjectTo<Command.CourseData>(_configuration).ToArrayAsync(token))
                         .Select(x =>
                         {
                             x.Assigned = assignedCourseIds.Contains(x.Id);
                             return x;
                         })
-                        .ToList();
+                        .ToArray();
                 }
 
                 return model;
             }
         }
 
-        public class CommandHandler : IRequestHandler<Command, int>
+        public class CommandHandler : IRequestHandler<Command>
         {
             private readonly SchoolContext _db;
 
             public CommandHandler(SchoolContext db) => _db = db;
 
-            public async Task<int> Handle(Command message, CancellationToken token)
+            public async Task<Unit> Handle(Command message, CancellationToken token)
             {
                 Instructor instructor;
                 if (message.Id == null)
@@ -95,9 +95,7 @@ namespace ContosoUniversity.Server.Features.Instructors
 
                 instructor.Handle(message);
 
-                await _db.SaveChangesAsync(token);
-
-                return instructor.Id;
+                return Unit.Value;
             }
         }
     }
