@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using ContosoUniversity.Shared;
+using FluentValidation.AspNetCore;
 
 namespace ContosoUniversity.Server
 {
@@ -37,7 +39,9 @@ namespace ContosoUniversity.Server
                 typeof(IPipelineBehavior<,>),
                 typeof(LoggingBehavior<,>));
 
-            services.AddMvc();
+            services.AddMvc()
+                .AddFluentValidation(x => x.RegisterValidatorsFromAssembly(typeof(SharedAssemblyTypeMarker).Assembly));
+
             services.AddResponseCompression(opts =>
             {
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(

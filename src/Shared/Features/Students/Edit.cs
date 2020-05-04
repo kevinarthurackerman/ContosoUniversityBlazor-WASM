@@ -33,6 +33,7 @@ namespace ContosoUniversity.Shared.Features.Students
         {
             public Validator()
             {
+                RuleFor(m => m.Id).NotEmpty();
                 RuleFor(m => m.LastName)
                     .Cascade(CascadeMode.StopOnFirstFailure)
                     .NotNull()
